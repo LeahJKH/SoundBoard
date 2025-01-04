@@ -33,6 +33,10 @@ const soundInfo = [
     {
         nameOf: "snare",
         keyOf: "e",
+    },
+    {
+        nameOf: "floor_tom",
+        keyOf: "t",
     }
 ]
 
@@ -46,12 +50,9 @@ function AudioPlay(name) {
 bongo.addEventListener("click", () => {AudioPlay(soundInfo[0].nameOf)})
 drumstick.addEventListener("click", () => {AudioPlay(soundInfo[2].nameOf)})
 drumkit.addEventListener("click", () => {
-    let random = Math.floor(Math.random() * soundInfo.length + 1)
-    if (random === 5) {
-        AudioPlay(soundInfo[4].nameOf)
-    } else {
-        AudioPlay(soundInfo[random].nameOf)
-    }
+    let newarr = soundInfo.filter((item) => item.nameOf !== "bongo")
+    let random = Math.floor(Math.random() * newarr.length)
+    AudioPlay(newarr[random].nameOf)
 })
 
 function createTxtSound (name, key, cardName) {
@@ -82,7 +83,7 @@ function createTxtSound (name, key, cardName) {
 randomBtn.addEventListener("click", () => {
     let random = Math.floor(Math.random() * soundInfo.length)
     AudioPlay(soundInfo[random].nameOf) 
-    })
+})
 
 
     // this creates both sound card and the buttons
