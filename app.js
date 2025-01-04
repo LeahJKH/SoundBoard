@@ -9,53 +9,53 @@ const soundCard = document.querySelector("#sound-card")
 const btns = document.querySelector("#btns")
 // Containers
 
+// random btn
 const randomBtn = document.querySelector("#random-btn")
+// random btn
 
 const soundInfo = [
     {
         nameOf: "bongo",
         keyOf: "b",
-        audioFile: "bongo.mp3",
     },
     {
         nameOf: "kick",
         keyOf: "q",
-        audioFile: "kick.mp3",
     },
     {
         nameOf: "roll",
         keyOf: "r",
-        audioFile: "roll.mp3",
     },
     {
-        nameOf: "single beat",
+        nameOf: "single_beat",
         keyOf: "w",
-        audioFile: "single_beat.mp3",
     },
     {
         nameOf: "snare",
         keyOf: "e",
-        audioFile: "snare.mp3",
     }
 ]
 
+// this plays the sounds
 function AudioPlay(name) {
-    let audio = new Audio(`./audios/${name}`)
+    let audio = new Audio(`./audios/${name}.mp3`)
     audio.play()
 }
 
-bongo.addEventListener("click", () => {AudioPlay(soundInfo[0].audioFile)})
-drumstick.addEventListener("click", () => {AudioPlay(soundInfo[2].audioFile)})
+// this puts sounds on the images
+bongo.addEventListener("click", () => {AudioPlay(soundInfo[0].nameOf)})
+drumstick.addEventListener("click", () => {AudioPlay(soundInfo[2].nameOf)})
 drumkit.addEventListener("click", () => {
     let random = Math.floor(Math.random() * soundInfo.length + 1)
     if (random === 5) {
-        AudioPlay(soundInfo[4].audioFile)
+        AudioPlay(soundInfo[4].nameOf)
     } else {
-        AudioPlay(soundInfo[random].audioFile)
+        AudioPlay(soundInfo[random].nameOf)
     }
 })
 
-function createTxtSound (name, key, cardName, audioFileSent) {
+function createTxtSound (name, key, cardName) {
+    // this checks which card it should fix
     if (cardName === soundCard) {
         const p = document.createElement("p")
         const text = document.createTextNode(`${name} = ${key}`)
@@ -64,24 +64,27 @@ function createTxtSound (name, key, cardName, audioFileSent) {
         cardName.appendChild(p)
         window.addEventListener("keydown", (e) => {
             if (e.key.toLowerCase() === key.toLowerCase()) {
-                AudioPlay(audioFileSent)
+                AudioPlay(name)
             }
-        })
-    } 
+        })} 
     else {
         const btn = document.createElement("button")
         const text = document.createTextNode(`${name}`)
         btn.append(text)
         btn.className = "btn-sounds"
         cardName.appendChild(btn)
-        
-    }
+        btn.addEventListener("click", () => {
+            AudioPlay(name)
+        })}
 }
 
+//this gives a random sound to random btn
 randomBtn.addEventListener("click", () => {
     let random = Math.floor(Math.random() * soundInfo.length)
-    AudioPlay(soundInfo[random].audioFile) 
+    AudioPlay(soundInfo[random].nameOf) 
     })
 
-soundInfo.forEach((item) => createTxtSound(item.nameOf, item.keyOf, soundCard, item.audioFile))
-soundInfo.forEach((item) => createTxtSound(item.nameOf, item.keyOf, btns, item.audioFile))
+
+    // this creates both sound card and the buttons
+soundInfo.forEach((item) => createTxtSound(item.nameOf, item.keyOf, soundCard))
+soundInfo.forEach((item) => createTxtSound(item.nameOf, item.keyOf, btns))
